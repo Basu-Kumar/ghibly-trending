@@ -35,28 +35,6 @@
         flex-direction: column;
       }
 
-      .warning-text {
-        font-size: 2rem;
-        color: #ff5555;
-        text-align: center;
-        margin-bottom: 30px;
-        text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-        animation: pulse 1.5s infinite;
-        max-width: 80%;
-      }
-
-      @keyframes pulse {
-        0% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.05);
-        }
-        100% {
-          transform: scale(1);
-        }
-      }
-
       .mystery-button {
         background: linear-gradient(145deg, #3a1c71, #d76d77, #ffaf7b);
         color: white;
@@ -115,6 +93,53 @@
         }
       }
 
+      /* Loading Page Styles */
+      .loading-page {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+      }
+
+      .loading-text {
+        font-size: 2rem;
+        margin-bottom: 30px;
+        text-align: center;
+      }
+
+      .loading-message {
+        font-size: 1.2rem;
+        margin-bottom: 20px;
+        text-align: center;
+        min-height: 2rem;
+      }
+
+      .loading-bar-container {
+        width: 80%;
+        max-width: 400px;
+        height: 30px;
+        background-color: #333;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+      }
+
+      .loading-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #3a1c71, #d76d77, #ffaf7b);
+        background-size: 200% 100%;
+        animation: gradient-shift 2s ease infinite;
+      }
+
+      @keyframes gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
       /* Second Page Styles */
       .second-page {
         display: none;
@@ -136,35 +161,21 @@
       .focus-point {
         width: 50px;
         height: 50px;
-        background: radial-gradient(
-          circle,
-          #ffffff 0%,
-          rgba(255, 255, 255, 0) 70%
-        );
+        background: radial-gradient(circle, #ffffff 0%, rgba(255,255,255,0) 70%);
         border-radius: 50%;
         margin-bottom: 30px;
         animation: glow 2s infinite;
       }
 
       @keyframes glow {
-        0% {
-          box-shadow: 0 0 5px #fff;
-        }
-        50% {
-          box-shadow: 0 0 20px #fff, 0 0 30px #f0f;
-        }
-        100% {
-          box-shadow: 0 0 5px #fff;
-        }
+        0% { box-shadow: 0 0 5px #fff; }
+        50% { box-shadow: 0 0 20px #fff, 0 0 30px #f0f; }
+        100% { box-shadow: 0 0 5px #fff; }
       }
 
       @keyframes fadeIn {
-        0% {
-          opacity: 0;
-        }
-        100% {
-          opacity: 1;
-        }
+        0% { opacity: 0; }
+        100% { opacity: 1; }
       }
 
       .countdown {
@@ -181,7 +192,7 @@
         justify-content: center;
         text-align: center;
         opacity: 0;
-        transition: opacity 2s ease;
+        transition: opacity 1s ease;
       }
 
       .reveal-image {
@@ -190,6 +201,8 @@
         border-radius: 10px;
         box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
         margin-bottom: 20px;
+        transform: scale(0);
+        transition: transform 1s ease;
       }
 
       .reveal-text {
@@ -198,17 +211,33 @@
         margin-top: 20px;
         padding: 0 20px;
         max-width: 600px;
+        min-height: 2.5rem;
+      }
+
+      .flash-image {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="40" r="8" fill="white"/><circle cx="30" cy="40" r="8" fill="white"/><path d="M30,60 Q50,80 70,60" stroke="white" fill="none" stroke-width="2"/></svg>');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 100px;
+        opacity: 0;
+        z-index: 100;
+        pointer-events: none;
       }
 
       /* Responsive Styles */
       @media (max-width: 768px) {
-        .warning-text {
-          font-size: 1.5rem;
-        }
-
         .mystery-button {
           font-size: 1.2rem;
           padding: 12px 24px;
+        }
+
+        .loading-text {
+          font-size: 1.5rem;
         }
 
         .stare-instruction {
@@ -225,13 +254,13 @@
       }
 
       @media (max-width: 480px) {
-        .warning-text {
-          font-size: 1.2rem;
-        }
-
         .mystery-button {
           font-size: 1rem;
           padding: 10px 20px;
+        }
+
+        .loading-text {
+          font-size: 1.2rem;
         }
 
         .stare-instruction {
@@ -251,31 +280,67 @@
   <body>
     <!-- First Page -->
     <div class="first-page">
-      <!-- <h1 class="warning-text">⚠️ WARNING: What you're about to see is EXTREMELY IMPORTANT! ⚠️</h1> -->
       <button class="mystery-button">Click Here</button>
+    </div>
+
+    <!-- Loading Page -->
+    <div class="loading-page">
+      <h2 class="loading-text">Preparing something amazing...</h2>
+      <p class="loading-message">Initializing prank sequence...</p>
+      <div class="loading-bar-container">
+        <div class="loading-bar"></div>
+      </div>
     </div>
 
     <!-- Second Page -->
     <div class="second-page">
-      <div class="stare-instruction">Please stare at the center...</div>
+      <div class="stare-instruction">Please stare at the center for 5 seconds...</div>
       <div class="focus-point"></div>
       <div class="countdown">5</div>
       <div class="reveal-container">
         <img src="" alt="Surprise Image" class="reveal-image" id="reveal-img" />
-        <p class="reveal-text">M toh time pass kr rha tha aur app 🤡...</p>
+        <p class="reveal-text"></p>
       </div>
     </div>
+
+    <!-- Flash Image Container -->
+    <div class="flash-image"></div>
+
+    <!-- Audio Elements -->
+    <audio id="tada-sound" preload="auto">
+      <source src="data:audio/mp3;base64,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" type="audio/mp3">
+    </audio>
 
     <script>
       // Elements
       const firstPage = document.querySelector(".first-page");
+      const loadingPage = document.querySelector(".loading-page");
       const secondPage = document.querySelector(".second-page");
       const mysteryButton = document.querySelector(".mystery-button");
+      const loadingBar = document.querySelector(".loading-bar");
+      const loadingMessage = document.querySelector(".loading-message");
       const stareInstruction = document.querySelector(".stare-instruction");
       const focusPoint = document.querySelector(".focus-point");
       const countdownElement = document.querySelector(".countdown");
       const revealContainer = document.querySelector(".reveal-container");
       const revealImage = document.getElementById("reveal-img");
+      const revealText = document.querySelector(".reveal-text");
+      const flashImage = document.querySelector(".flash-image");
+      const tadaSound = document.getElementById("tada-sound");
+
+      // Loading messages
+      const loadingMessages = [
+        "Initializing prank sequence...",
+        "Searching for something hilarious...",
+        "Contacting comedy department...",
+        "Preparing your disappointment...",
+        "Making it extra special for you...",
+        "Calculating optimal joke timing...",
+        "Loading advanced humor algorithms...",
+        "Finding the perfect surprise...",
+        "This is definitely worth the wait...",
+        "Almost ready to blow your mind..."
+      ];
 
       // Create ambient particles for suspense
       function createAmbientParticles() {
@@ -304,8 +369,53 @@
         }
       }
 
-      // Set the image path (left empty for you to fill in)
+      // Set the image path
       const imageSrc = "./images/raju.jpg";
+
+      // Start loading sequence
+      function startLoading() {
+        let progress = 0;
+        let messageIndex = 0;
+        
+        // Show first loading message
+        loadingMessage.textContent = loadingMessages[0];
+        
+        // Update loading bar at random speeds
+        const loadingInterval = setInterval(() => {
+          // Random increment between 1 and 5
+          const increment = Math.random() * 4 + 1;
+          progress += increment;
+          
+          // Update loading bar width
+          if (progress <= 100) {
+            loadingBar.style.width = `${progress}%`;
+          }
+          
+          // Change loading message occasionally
+          if (progress > messageIndex * 12 && messageIndex < loadingMessages.length - 1) {
+            messageIndex++;
+            loadingMessage.textContent = loadingMessages[messageIndex];
+          }
+          
+          // When loading completes
+          if (progress >= 100) {
+            clearInterval(loadingInterval);
+            setTimeout(() => {
+              loadingPage.style.display = "none";
+              secondPage.style.display = "flex";
+              startStaringPhase();
+            }, 1000);
+          }
+        }, 200);
+      }
+
+      // Flash a scary face briefly
+      function flashScaryFace() {
+        flashImage.style.opacity = "0.7";
+        setTimeout(() => {
+          flashImage.style.opacity = "0";
+        }, 100);
+      }
 
       // Start staring phase
       function startStaringPhase() {
@@ -314,26 +424,53 @@
           focusPoint.style.display = "none";
           countdownElement.style.display = "block";
           startCountdown();
-        }, 7000); // Show staring instruction for 5 seconds
+        }, 5000); // Show staring instruction for 5 seconds
       }
 
       // Start countdown
       function startCountdown() {
         let count = 5;
+        
+        // Show initial count
+        countdownElement.textContent = count;
 
         const interval = setInterval(() => {
           count--;
           countdownElement.textContent = count;
+          
+          // Flash scary face at random intervals
+          if (Math.random() > 0.6) {
+            flashScaryFace();
+          }
 
           if (count <= 0) {
             clearInterval(interval);
             countdownElement.style.display = "none";
-            revealImage.src = imageSrc;
             revealContainer.style.display = "flex";
 
             // Fade in the reveal
             setTimeout(() => {
               revealContainer.style.opacity = "1";
+              revealImage.src = imageSrc;
+              
+              // Start image zoom animation
+              setTimeout(() => {
+                revealImage.style.transform = "scale(1)";
+                // Play tada sound
+                tadaSound.play();
+                
+                // Type the text character by character
+                const finalText = "M toh time pass kr rha tha aur app 🤡...";
+                let textIndex = 0;
+                const typeInterval = setInterval(() => {
+                  revealText.textContent = finalText.substring(0, textIndex);
+                  textIndex++;
+                  
+                  if (textIndex > finalText.length) {
+                    clearInterval(typeInterval);
+                  }
+                }, 100);
+              }, 500);
             }, 100);
           }
         }, 1000);
@@ -346,8 +483,8 @@
         // Button click event
         mysteryButton.addEventListener("click", () => {
           firstPage.style.display = "none";
-          secondPage.style.display = "flex";
-          startStaringPhase();
+          loadingPage.style.display = "flex";
+          startLoading();
         });
       });
     </script>
