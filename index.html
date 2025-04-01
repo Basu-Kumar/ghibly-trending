@@ -439,10 +439,21 @@
 
       // Flash a scary face briefly
       function flashScaryFace() {
-        flashImage.style.opacity = "0.7";
+        // Change the background to white briefly for contrast
+        document.body.style.backgroundColor = "#ffffff";
+        flashImage.style.opacity = "1";
+
+        // Make the flash image more visible with a higher contrast background
+        flashImage.style.backgroundColor = "white";
+
+        // Increase the size of the flash image
+        flashImage.style.backgroundSize = "200px";
+
         setTimeout(() => {
+          // Reset back to original black background
+          document.body.style.backgroundColor = "#121212";
           flashImage.style.opacity = "0";
-        }, 100);
+        }, 150); // Extended flash time slightly
       }
 
       // Start staring phase
