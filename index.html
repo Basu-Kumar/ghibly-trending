@@ -236,6 +236,37 @@
         min-height: 2.5rem;
       }
 
+      /* New styles for the final countdown */
+      .final-countdown {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-top: 30px;
+        color: #ffaf7b;
+        text-shadow: 0 0 10px rgba(255, 165, 0, 0.7);
+        display: none;
+      }
+
+      .final-message {
+        font-size: 2rem;
+        text-align: center;
+        margin-top: 20px;
+        padding: 0 20px;
+        max-width: 600px;
+        color: #ff6b6b;
+        text-shadow: 0 0 10px rgba(255, 107, 107, 0.7);
+        display: none;
+        animation: slowAppear 3s ease-in-out forwards;
+      }
+
+      @keyframes slowAppear {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
       .flash-image {
         position: fixed;
         top: 0;
@@ -273,6 +304,14 @@
         .reveal-text {
           font-size: 1.4rem;
         }
+
+        .final-countdown {
+          font-size: 2.5rem;
+        }
+
+        .final-message {
+          font-size: 1.6rem;
+        }
       }
 
       @media (max-width: 480px) {
@@ -295,6 +334,14 @@
 
         .reveal-text {
           font-size: 1.2rem;
+        }
+
+        .final-countdown {
+          font-size: 2rem;
+        }
+
+        .final-message {
+          font-size: 1.3rem;
         }
       }
     </style>
@@ -322,6 +369,9 @@
       <div class="reveal-container">
         <img src="" alt="Surprise Image" class="reveal-image" id="reveal-img" />
         <p class="reveal-text"></p>
+        <!-- New elements for final countdown and message -->
+        <div class="final-countdown">5</div>
+        <p class="final-message">Ta-da! Nothing happened😄</p>
       </div>
     </div>
 
@@ -352,6 +402,10 @@
       const revealText = document.querySelector(".reveal-text");
       const flashImage = document.querySelector(".flash-image");
       const tadaSound = document.getElementById("tada-sound");
+
+      // New elements
+      const finalCountdown = document.querySelector(".final-countdown");
+      const finalMessage = document.querySelector(".final-message");
 
       // Loading messages
       const loadingMessages = [
@@ -499,7 +553,8 @@
                 tadaSound.play();
 
                 // Type the text character by character
-                const finalText = "M toh time pass kr rha tha aur app 🤡...";
+                const finalText =
+                  "M toh time pass kr rha tha🤡🤡.... The actual surprise is still loading...";
                 let textIndex = 0;
                 const typeInterval = setInterval(() => {
                   revealText.textContent = finalText.substring(0, textIndex);
@@ -507,10 +562,35 @@
 
                   if (textIndex > finalText.length) {
                     clearInterval(typeInterval);
+
+                    // Start final countdown after 3 seconds
+                    setTimeout(() => {
+                      startFinalCountdown();
+                    }, 3000);
                   }
                 }, 100);
               }, 500);
             }, 100);
+          }
+        }, 1000);
+      }
+
+      // Start final countdown
+      function startFinalCountdown() {
+        let count = 5;
+        finalCountdown.style.display = "block";
+        finalCountdown.textContent = count;
+
+        const interval = setInterval(() => {
+          count--;
+          finalCountdown.textContent = count;
+
+          if (count <= 0) {
+            clearInterval(interval);
+            finalCountdown.style.display = "none";
+
+            // Show final message
+            finalMessage.style.display = "block";
           }
         }, 1000);
       }
