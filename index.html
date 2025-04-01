@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Click Here...</title>
+    <style>
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Arial", sans-serif;
+      }
+
+      body {
+        background-color: #121212;
+        color: #fff;
+        overflow: hidden;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* First Page Styles */
+      .first-page {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+      }
+
+      .warning-text {
+        font-size: 2rem;
+        color: #ff5555;
+        text-align: center;
+        margin-bottom: 30px;
+        text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+        animation: pulse 1.5s infinite;
+        max-width: 80%;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      .mystery-button {
+        background: linear-gradient(145deg, #3a1c71, #d76d77, #ffaf7b);
+        color: white;
+        font-size: 1.5rem;
+        padding: 15px 30px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+        transition: transform 0.3s, box-shadow 0.3s;
+        position: absolute;
+        top: -100px;
+        animation: rollDown 2s ease-in-out forwards;
+      }
+
+      .mystery-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 15px 25px rgba(0, 0, 0, 0.6);
+      }
+
+      .ambient-particle {
+        position: absolute;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      @keyframes rollDown {
+        0% {
+          top: -100px;
+          transform: rotate(0deg);
+        }
+        60% {
+          top: 50%;
+          transform: translateY(-50%) rotate(720deg);
+        }
+        80% {
+          top: 50%;
+          transform: translateY(-50%) rotate(720deg) scale(1.2);
+        }
+        100% {
+          top: 50%;
+          transform: translateY(-50%) rotate(720deg) scale(1);
+        }
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0) translateX(0);
+        }
+        50% {
+          transform: translateY(-20px) translateX(10px);
+        }
+        100% {
+          transform: translateY(0) translateX(0);
+        }
+      }
+
+      /* Second Page Styles */
+      .second-page {
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+      }
+
+      .stare-instruction {
+        font-size: 2rem;
+        text-align: center;
+        margin-bottom: 30px;
+        opacity: 0;
+        animation: fadeIn 1s ease forwards;
+      }
+
+      .focus-point {
+        width: 50px;
+        height: 50px;
+        background: radial-gradient(
+          circle,
+          #ffffff 0%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        border-radius: 50%;
+        margin-bottom: 30px;
+        animation: glow 2s infinite;
+      }
+
+      @keyframes glow {
+        0% {
+          box-shadow: 0 0 5px #fff;
+        }
+        50% {
+          box-shadow: 0 0 20px #fff, 0 0 30px #f0f;
+        }
+        100% {
+          box-shadow: 0 0 5px #fff;
+        }
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      .countdown {
+        font-size: 8rem;
+        font-weight: bold;
+        text-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
+        display: none;
+      }
+
+      .reveal-container {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        opacity: 0;
+        transition: opacity 2s ease;
+      }
+
+      .reveal-image {
+        max-width: 90%;
+        max-height: 60vh;
+        border-radius: 10px;
+        box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+        margin-bottom: 20px;
+      }
+
+      .reveal-text {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-top: 20px;
+        padding: 0 20px;
+        max-width: 600px;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .warning-text {
+          font-size: 1.5rem;
+        }
+
+        .mystery-button {
+          font-size: 1.2rem;
+          padding: 12px 24px;
+        }
+
+        .stare-instruction {
+          font-size: 1.5rem;
+        }
+
+        .countdown {
+          font-size: 6rem;
+        }
+
+        .reveal-text {
+          font-size: 1.4rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .warning-text {
+          font-size: 1.2rem;
+        }
+
+        .mystery-button {
+          font-size: 1rem;
+          padding: 10px 20px;
+        }
+
+        .stare-instruction {
+          font-size: 1.2rem;
+        }
+
+        .countdown {
+          font-size: 4rem;
+        }
+
+        .reveal-text {
+          font-size: 1.2rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- First Page -->
+    <div class="first-page">
+      <!-- <h1 class="warning-text">⚠️ WARNING: What you're about to see is EXTREMELY IMPORTANT! ⚠️</h1> -->
+      <button class="mystery-button">Click Here</button>
+    </div>
+
+    <!-- Second Page -->
+    <div class="second-page">
+      <div class="stare-instruction">Please stare at the center...</div>
+      <div class="focus-point"></div>
+      <div class="countdown">5</div>
+      <div class="reveal-container">
+        <img src="" alt="Surprise Image" class="reveal-image" id="reveal-img" />
+        <p class="reveal-text">M toh time pass kr rha tha aur app 🤡...</p>
+      </div>
+    </div>
+
+    <script>
+      // Elements
+      const firstPage = document.querySelector(".first-page");
+      const secondPage = document.querySelector(".second-page");
+      const mysteryButton = document.querySelector(".mystery-button");
+      const stareInstruction = document.querySelector(".stare-instruction");
+      const focusPoint = document.querySelector(".focus-point");
+      const countdownElement = document.querySelector(".countdown");
+      const revealContainer = document.querySelector(".reveal-container");
+      const revealImage = document.getElementById("reveal-img");
+
+      // Create ambient particles for suspense
+      function createAmbientParticles() {
+        for (let i = 0; i < 50; i++) {
+          const particle = document.createElement("div");
+          particle.classList.add("ambient-particle");
+
+          // Random size between 2 and 6px
+          const size = Math.random() * 4 + 2;
+          particle.style.width = `${size}px`;
+          particle.style.height = `${size}px`;
+
+          // Random position
+          particle.style.left = `${Math.random() * 100}%`;
+          particle.style.top = `${Math.random() * 100}%`;
+
+          // Random opacity
+          particle.style.opacity = Math.random() * 0.5;
+
+          // Random animation
+          const duration = Math.random() * 20 + 10;
+          particle.style.animation = `float ${duration}s ease-in-out infinite`;
+          particle.style.animationDelay = `${Math.random() * 10}s`;
+
+          document.body.appendChild(particle);
+        }
+      }
+
+      // Set the image path (left empty for you to fill in)
+      const imageSrc = "./images/raju.jpg";
+
+      // Start staring phase
+      function startStaringPhase() {
+        setTimeout(() => {
+          stareInstruction.style.display = "none";
+          focusPoint.style.display = "none";
+          countdownElement.style.display = "block";
+          startCountdown();
+        }, 7000); // Show staring instruction for 5 seconds
+      }
+
+      // Start countdown
+      function startCountdown() {
+        let count = 5;
+
+        const interval = setInterval(() => {
+          count--;
+          countdownElement.textContent = count;
+
+          if (count <= 0) {
+            clearInterval(interval);
+            countdownElement.style.display = "none";
+            revealImage.src = imageSrc;
+            revealContainer.style.display = "flex";
+
+            // Fade in the reveal
+            setTimeout(() => {
+              revealContainer.style.opacity = "1";
+            }, 100);
+          }
+        }, 1000);
+      }
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", () => {
+        createAmbientParticles();
+
+        // Button click event
+        mysteryButton.addEventListener("click", () => {
+          firstPage.style.display = "none";
+          secondPage.style.display = "flex";
+          startStaringPhase();
+        });
+      });
+    </script>
+  </body>
+</html>
